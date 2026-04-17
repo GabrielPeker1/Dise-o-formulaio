@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Formulario - Nombres Apellidos DNI CUIL</title>
+  <style>
+    :root{
+      --green-light: #b6f0c6;
+      --red-light: #ff6b6b;
+      --border-default: #cfcfcf;
+      --label-color: #111;
+      --warning-color: #d9534f;
+      --primary-blue: #007bff;
+      --primary-blue-hover: #0056b3;
+      --gap: 24px;
+      --radius: 10px;
+      --input-padding: 10px 12px;
+      --font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    body{
+      font-family: var(--font-family);
+      background: #f7f7f8;
+      padding: 28px;
+    }
+
+    .form-wrapper{
+      max-width: 520px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 22px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(20,20,30,0.06);
+    }
+
+    form{ display: flex; flex-direction: column; gap: var(--gap); }
+
+    .field{ display: flex; flex-direction: column; }
+
+    .field label{
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 0.92rem;
+    }
+
+    input[type="text"], input[type="tel"]{
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius);
+      padding: var(--input-padding);
+      font-size: 1rem;
+      outline: none;
+      transition: all 160ms ease;
+    }
+
+    input:focus{
+      border-color: var(--green-light);
+      box-shadow: 0 0 8px var(--green-light);
+    }
+
+    input.valid {
+      border-color: var(--green-light);
+      box-shadow: 0 0 8px var(--green-light);
+    }
+
+    .btn-container { display: flex; justify-content: flex-end; margin-top: 10px; }
+
+    .btn-next {
+      background-color: var(--primary-blue);
+      color: white;
+      border: none;
+      padding: 12px 35px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 200ms;
+    }
+
+    .btn-next:hover { background-color: var(--primary-blue-hover); }
+
+    input.invalid {
+      border-color: var(--red-light) !important;
+      box-shadow: 0 0 8px var(--red-light) !important;
+    }
+
+    .warning {
+      color: var(--warning-color);
+      font-size: 0.8rem;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .warning.visible { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="form-wrapper">
+  <form id="miFormulario" novalidate>
+    <div class="field">
+      <label for="nombres">Nombres</label>
+      <input id="nombres" type="text" placeholder="Nombres" maxlength="20" autocomplete="off" />
+      <div id="nombres-desc" class="warning">*Escriba su nombre o nombres.</div>
+    </div>
+
+    <div class="field">
+      <label for="apellidos">Apellidos</label>
+      <input id="apellidos" type="text" placeholder="Apellidos" maxlength="20" autocomplete="off" />
+      <div id="apellidos-desc" class="warning">*Escriba su apellido o apellidos.</div>
+    </div>
+
+    <div class="field">
+      <label for="dni">D.N.I.</label>
+      <input id="dni" type="tel" placeholder="D.N.I." inputmode="numeric" maxlength="8" />
+      <div id="dni-desc" class="warning">*El mínimo de números que debe ingresar es de 7.</div>
+    </div>
+
+    <div class="field">
+      <label for="cuil">CUIL/CUIT</label>
+      <input id="cuil" type="tel" placeholder="CUIL/CUIT" inputmode="numeric" maxlength="11" />
+      <div id="cuil-desc" class="warning">*Debe ingresar 11 números.</div>
+    </div>
+
+    <div class="btn-container">
+      <button type="button" id="btnSiguiente" class="btn-next">Siguiente</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  (function(){
+    const nombres = document.getElementById('nombres');
+    const apellidos = document.getElementById('apellidos');
+    const dni = document.getElementById('dni');
+    const cuil = document.getElementById('cuil');
+    const btnSiguiente = document.getElementById('btnSiguiente');
+
+    const onlyLetters = (s) => s.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñÜü\s'-]/g, '');
+    const onlyDigits = (s) => s.replace(/\D+/g, '');
+
+    function checkCompletion(input) {
+      if (input === nombres || input === apellidos) {
+        if (input.value.trim().length >= 2) {
+          input.classList.add('valid');
+        } else {
+          input.classList.remove('valid');
+        }
+      } else if (input === dni) {
+        if (onlyDigits(input.value).length >= 7) {
+          input.classList.add('valid');
+        } else {
+          input.classList.remove('valid');
+        }
+      } else if (input === cuil) {
+        if (onlyDigits(input.value).length === 11) {
+          input.classList.add('valid');
+        } else {
+          input.classList.remove('valid');
+        }
+      }
+    }
+
+    // Lógica para Nombres y Apellidos
+    function handleLettersInput(e) {
+      const el = e.target;
+      let val = el.value;
+      let cleaned = onlyLetters(val).toUpperCase();
+      if (val !== cleaned) {
+        el.value = cleaned;
+      }
+      
+      // Limpiar el estado de error (rojo) al empezar a escribir
+      el.classList.remove('invalid');
+      const desc = document.getElementById(el.id + '-desc');
+      if (desc) desc.classList.remove('visible');
+
+      checkCompletion(el);
+    }
+
+    nombres.addEventListener('input', handleLettersInput);
+    apellidos.addEventListener('input', handleLettersInput);
+
+    // Lógica para DNI y CUIL
+    [dni, cuil].forEach(input => {
+      input.addEventListener('input', (e) => {
+        e.target.value = onlyDigits(e.target.value);
+        
+        input.classList.remove('invalid');
+        const desc = document.getElementById(input.id + '-desc');
+        if(desc) desc.classList.remove('visible');
+
+        checkCompletion(input);
+      });
+    });
+
+    // Validación total al hacer clic en SIGUIENTE
+    btnSiguiente.addEventListener('click', () => {
+      let isNombresValid = nombres.value.trim().length >= 2;
+      let isApellidosValid = apellidos.value.trim().length >= 2;
+      let isDniValid = onlyDigits(dni.value).length >= 7;
+      let isCuilValid = onlyDigits(cuil.value).length === 11;
+
+      // Validar Nombres
+      if (!isNombresValid) {
+        nombres.classList.add('invalid');
+        nombres.classList.remove('valid');
+        document.getElementById('nombres-desc').classList.add('visible');
+      }
+
+      // Validar Apellidos
+      if (!isApellidosValid) {
+        apellidos.classList.add('invalid');
+        apellidos.classList.remove('valid');
+        document.getElementById('apellidos-desc').classList.add('visible');
+      }
+
+      // Validar DNI
+      if (!isDniValid) {
+        dni.classList.add('invalid');
+        dni.classList.remove('valid');
+        document.getElementById('dni-desc').classList.add('visible');
+      }
+      
+      // Validar CUIL
+      if (!isCuilValid) {
+        cuil.classList.add('invalid');
+        cuil.classList.remove('valid');
+        document.getElementById('cuil-desc').classList.add('visible');
+      }
+
+      if (isNombresValid && isApellidosValid && isDniValid && isCuilValid) {
+        alert("¡Todo correcto! Pasando al siguiente paso...");
+      }
+    });
+
+  })();
+</script>
+
+</body>
+</html>
