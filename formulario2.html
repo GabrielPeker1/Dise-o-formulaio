@@ -298,12 +298,6 @@
       if (first) first.scrollIntoView({ behavior:'smooth', block:'center' });
     }
   });
-  document.getElementById('email').addEventListener('blur', function() {
-  const val = this.value.trim();
-  if (val && !val.includes('@')) {
-    this.value = val + '@gmail.com';
-  }
-});
 </script>
 </body>
 </html>
