@@ -241,7 +241,7 @@
   }
 
   ['keypress','paste','input'].forEach(ev => {
-    document.getElementById('nombre').addEventListener(ev, soloLetras);
+    ['nombre','provincia','ciudad'].forEach(id => document.getElementById(id).addEventListener(ev, soloLetras));
     ['dni','tel','telalt'].forEach(id => document.getElementById(id).addEventListener(ev, soloNumeros));
   });
 
