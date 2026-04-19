@@ -134,7 +134,14 @@
         <div class="field col-full">
           <div class="divider"></div>
           <label for="email">Correo electrónico</label>
-          <input type="email" id="email" placeholder="Ej: juan.garcia@gmail.com" autocomplete="email">
+          <input type="email" id="email" placeholder="Ej: juan.garcia@gmail.com" autocomplete="email"><input type="email" id="email" placeholder="Ej: juan.garcia@gmail.com" 
+       autocomplete="email" list="email-sugerencias">
+<datalist id="email-sugerencias">
+  <option value="@gmail.com">
+  <option value="@hotmail.com">
+  <option value="@outlook.com">
+  <option value="@yahoo.com">
+</datalist>
           <span class="error-msg" id="err-email"><svg class="ico" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3.5M8 11h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Revisá el formato: debe tener @ y un dominio (ej: .com)</span>
           <span class="ok-msg" id="ok-email"><svg class="ico" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Correcto</span>
         </div>
