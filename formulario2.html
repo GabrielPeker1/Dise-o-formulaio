@@ -9,12 +9,13 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg-page:#EEF2F7;--bg-card:#FFFFFF;--bg-input:#F5F7FA;--bg-input-focus:#FFFFFF;
-      --border-def:#D5DAE4;--border-hover:#A0ABBE;--border-focus:#2563EB;--focus-ring:rgba(37,99,235,.18);--focus-label:#1D4ED8;
+      --border-def:#94A3B8;--border-hover:#006aff;--border-focus:#0051ff;--focus-ring:rgba(37,99,235,.18);--focus-label:#1D4ED8;
       --border-valid:#16A34A;--valid-ring:rgba(22,163,74,.14);--valid-bg:#F0FDF4;
       --border-err:#DC2626;--err-ring:rgba(220,38,38,.14);--err-bg:#FEF2F2;
-      --text-primary:#111827;--text-secondary:#374151;--text-muted:#6B7280;--text-hint:#9CA3AF;--text-err:#B91C1C;--text-ok:#15803D;
+      --text-primary:#111827;--text-secondary:#374151;--text-muted:#6B7280;--text-hint:#4B5563;--text-err:#B91C1C;--text-ok:#15803D;
       --accent:#2563EB;--accent-dark:#1D4ED8;
-      --section-1-accent:#4F46E5;--section-2-accent:#0891B2;--section-3-accent:#059669;
+      --section-1-accent:#4F46E5;--section-2-accent:#4F46E5;--section-3-accent:#4F46E5;
+      --section-1-bg:#F0F0FF;--section-2-bg:#F0F0FF;--section-3-bg:#F0F0FF;
       --opt-bg:#F0F4FF;--opt-color:#4338CA;--opt-border:#C7D2FE;
       --success-bg:#ECFDF5;--success-border:#6EE7B7;--success-text:#065F46;
       --shadow-card:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06);--shadow-btn:0 4px 14px rgba(37,99,235,.35);
@@ -34,8 +35,33 @@
     .section-icon { width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
     .section-icon svg { width:17px;height:17px; }
     .s1 .section-icon { background:#EEF2FF;color:var(--section-1-accent); }
-    .s2 .section-icon { background:#ECFEFF;color:var(--section-2-accent); }
-    .s3 .section-icon { background:#ECFDF5;color:var(--section-3-accent); }
+    .s2 .section-icon { background:#EEF2FF;color:var(--section-2-accent); }
+    .s3 .section-icon { background:#EEF2FF;color:var(--section-3-accent); }
+    .s1 { background: var(--bg-card); border-color: #C7C7F7; border-width: 1.5px; }
+    .s2 { background: var(--bg-card); border-color: #C7C7F7; border-width: 1.5px; }
+    .s3 { background: var(--bg-card); border-color: #C7C7F7; border-width: 1.5px; }
+    /* Phone prefix */
+    .tel-wrap { display:flex; gap:0; }
+    select.prefix {
+      width:auto; min-width:110px; flex-shrink:0;
+      border-radius:10px 0 0 10px; border-right:none;
+      background-color:#EBF0FA; font-size:13px; font-weight:600; color:#2b076b;
+      padding-left:10px; padding-right:28px;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%233A5A9B' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-position:right 10px center;
+      border-color: #B8CCEE;
+      transition: color .15s, border-color .15s, box-shadow .15s;
+    }
+
+    .tel-wrap select.prefix:hover { background-color:#EBF0FA; border-color:#006aff; }
+    .tel-wrap select.prefix:focus { z-index:1; border-right:none; border-radius:10px 0 0 10px; background-color:#EBF0FA; }
+    .tel-wrap input.tel-num { border-radius:0 10px 10px 0; flex:1; min-width:0; }
+    .tel-wrap select.prefix.invalid,
+    .tel-wrap input.tel-num.invalid { border-color:var(--border-err); background:var(--err-bg); box-shadow:0 0 0 3px var(--err-ring); }
+    .tel-wrap:focus-within select.prefix,
+    .tel-wrap:focus-within input.tel-num { border-color:var(--border-focus); }
+    .tel-wrap:focus-within select.prefix { box-shadow: none; }
+    .tel-wrap:focus-within input.tel-num { box-shadow: 0 0 0 4px var(--focus-ring); }
     .section-title { font-size:13.5px;font-weight:700;color:var(--text-secondary); }
     .section-subtitle { font-size:11.5px;color:var(--text-hint);font-weight:400;margin-top:1px; }
     .cols { display:grid;grid-template-columns:1fr 1fr;gap:1.125rem; }
@@ -71,6 +97,12 @@
     .success-banner svg { width:22px;height:22px;flex-shrink:0; }
     .success-banner .sub { font-size:12.5px;font-weight:400;color:#047857;margin-top:2px; }
     .required-note { font-size:12px;color:var(--text-hint);text-align:center; }
+    #add-tel-btn { display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 13px;font-size:12px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;color:var(--accent);background:#EBF0FA;border:1.5px dashed #B8CCEE;border-radius:10px;cursor:pointer;letter-spacing:.01em;white-space:nowrap;transition:color .15s,border-color .15s; }
+    #add-tel-btn:hover { color:var(--accent-dark);border-color:#7A9FD4;background:#EBF0FA; }
+    #telalt-field label { display:flex;align-items:center; }
+    #remove-tel-btn:hover { color:var(--text-secondary); }
+    @keyframes revealField { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+    #telalt-field { animation:revealField .18s ease; }
     @media(max-width:520px){.cols{grid-template-columns:1fr}.section{padding:1.25rem}body{padding:1.5rem .75rem 4rem}}
   </style>
 </head>
@@ -117,16 +149,56 @@
         <div><div class="section-title">Información de contacto</div><div class="section-subtitle">Teléfonos y correo electrónico</div></div>
       </div>
       <div class="cols">
-        <div class="field">
-          <label for="tel">Teléfono</label>
-          <input type="tel" id="tel" placeholder="Ej: 3489 123456" autocomplete="tel">
+        <div class="field col-full" id="tel-main-row">
+          <label for="tel-num">Teléfono</label>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="tel-wrap" style="flex:1;">
+              <select class="prefix" id="tel-prefix" autocomplete="tel-country-code">
+                <option value="+54">🇦🇷 +54</option>
+                <option value="+598">🇺🇾 +598</option>
+                <option value="+55">🇧🇷 +55</option>
+                <option value="+56">🇨🇱 +56</option>
+                <option value="+595">🇵🇾 +595</option>
+                <option value="+591">🇧🇴 +591</option>
+                <option value="+51">🇵🇪 +51</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+34">🇪🇸 +34</option>
+                <option value="+52">🇲🇽 +52</option>
+              </select>
+              <input type="tel" id="tel-num" class="tel-num" placeholder="Ej: 3489 123456" autocomplete="tel-national">
+            </div>
+            <div id="add-tel-wrap" style="flex-shrink:0;">
+              <button type="button" id="add-tel-btn" onclick="toggleAltTel()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Agregar alternativo
+              </button>
+            </div>
+          </div>
           <span class="hint">Con código de área, sin el 0 ni el 15</span>
           <span class="error-msg" id="err-tel"><svg class="ico" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3.5M8 11h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Ingresá un número de teléfono válido</span>
           <span class="ok-msg" id="ok-tel"><svg class="ico" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Correcto</span>
         </div>
-        <div class="field">
-          <label for="telalt">Teléfono alternativo <span class="opt-badge">opcional</span></label>
-          <input type="tel" id="telalt" placeholder="Ej: 11 98765432" autocomplete="tel">
+        <div class="field col-full" id="telalt-field" style="display:none;">
+          <label for="telalt-num">Teléfono alternativo <span class="opt-badge">opcional</span>
+            <button type="button" id="remove-tel-btn" onclick="removeAltTel()" title="Quitar teléfono alternativo" style="margin-left:auto;background:none;border:none;cursor:pointer;padding:2px 4px;color:var(--text-muted);display:flex;align-items:center;border-radius:4px;transition:color .15s;">
+              <svg viewBox="0 0 16 16" fill="none" width="13" height="13"><line x1="4" y1="4" x2="12" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="4" x2="4" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+          </label>
+          <div class="tel-wrap">
+            <select class="prefix" id="telalt-prefix" autocomplete="tel-country-code">
+              <option value="+54">🇦🇷 +54</option>
+              <option value="+598">🇺🇾 +598</option>
+              <option value="+55">🇧🇷 +55</option>
+              <option value="+56">🇨🇱 +56</option>
+              <option value="+595">🇵🇾 +595</option>
+              <option value="+591">🇧🇴 +591</option>
+              <option value="+51">🇵🇪 +51</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+34">🇪🇸 +34</option>
+              <option value="+52">🇲🇽 +52</option>
+            </select>
+            <input type="tel" id="telalt-num" class="tel-num" placeholder="Ej: 11 98765432" autocomplete="tel-national">
+          </div>
           <span class="hint">Celular o teléfono fijo</span>
           <span class="error-msg" id="err-telalt"><svg class="ico" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3.5M8 11h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>El formato ingresado no es válido</span>
           <span class="ok-msg" id="ok-telalt"><svg class="ico" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Correcto</span>
@@ -198,6 +270,24 @@
 </div>
 
 <script>
+  function toggleAltTel() {
+    document.getElementById('add-tel-wrap').style.display = 'none';
+    const f = document.getElementById('telalt-field');
+    f.style.display = '';
+    f.style.animation = 'none';
+    requestAnimationFrame(() => { f.style.animation = ''; });
+    document.getElementById('telalt-num').focus();
+  }
+  function removeAltTel() {
+    document.getElementById('telalt-field').style.display = 'none';
+    document.getElementById('add-tel-wrap').style.display = '';
+    const el = document.getElementById('telalt-num');
+    el.value = '';
+    el.classList.remove('valid','invalid');
+    document.getElementById('err-telalt').classList.remove('show');
+    document.getElementById('ok-telalt').classList.remove('show');
+  }
+
   // ── Filtros de entrada ──────────────────────────────────────────
 
   // Solo letras, espacios, tildes y ñ (nombre)
@@ -242,15 +332,15 @@
 
   ['keypress','paste','input'].forEach(ev => {
     ['nombre','provincia','ciudad'].forEach(id => document.getElementById(id).addEventListener(ev, soloLetras));
-    ['dni','tel','telalt'].forEach(id => document.getElementById(id).addEventListener(ev, soloNumeros));
+    ['dni','tel-num','telalt-num'].forEach(id => document.getElementById(id).addEventListener(ev, soloNumeros));
   });
 
   // ── Validación ──────────────────────────────────────────────────
   const rules = {
     nombre:    { el:'nombre',    validate: v => v.trim().split(/\s+/).length >= 2 && v.trim().length >= 4,                        err:'err-nombre',    ok:'ok-nombre'    },
     dni:       { el:'dni',       validate: v => { const d=v.replace(/[\s\-]/g,''); return /^\d{7,11}$/.test(d); },               err:'err-dni',       ok:'ok-dni'       },
-    tel:       { el:'tel',       validate: v => { const d=v.replace(/[\s\-\(\)]/g,''); return /^\+?\d{8,15}$/.test(d); },        err:'err-tel',       ok:'ok-tel'       },
-    telalt:    { el:'telalt',    validate: v => { if(!v.trim()) return true; const d=v.replace(/[\s\-\(\)]/g,''); return /^\+?\d{8,15}$/.test(d); }, err:'err-telalt', ok:'ok-telalt' },
+    tel:       { el:'tel-num',    validate: v => { const d=v.replace(/[\s\-\(\)]/g,''); return /^\+?\d{6,14}$/.test(d); },        err:'err-tel',       ok:'ok-tel'       },
+    telalt:    { el:'telalt-num', validate: v => { if(!v.trim()) return true; const d=v.replace(/[\s\-\(\)]/g,''); return /^\+?\d{6,14}$/.test(d); }, err:'err-telalt', ok:'ok-telalt' },
     email:     { el:'email',     validate: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),                                 err:'err-email',     ok:'ok-email'     },
     pais:      { el:'pais',      validate: v => v !== '',                                                                        err:'err-pais'                         },
     provincia: { el:'provincia', validate: v => v.trim().length >= 2,                                                            err:'err-provincia', ok:'ok-provincia'  },
@@ -285,7 +375,11 @@
   document.getElementById('mainForm').addEventListener('submit', e => {
     e.preventDefault();
     let allOk = true;
-    Object.keys(rules).forEach(key => { if (!validate(key, true)) allOk = false; });
+    const telaltHidden = document.getElementById('telalt-field').style.display === 'none';
+    Object.keys(rules).forEach(key => {
+      if (key === 'telalt' && telaltHidden) return;
+      if (!validate(key, true)) allOk = false;
+    });
     if (allOk) {
       document.getElementById('successBanner').classList.add('show');
       const btn = document.getElementById('submitBtn');
